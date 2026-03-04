@@ -3,1465 +3,1099 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Submit Your Work — Premanjan Pradhan</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Petit+Formal+Script&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<title>Words & Visions — Where Every Voice Finds Its Reader</title>
+<meta name="description" content="An open poetry publishing platform. Submit original verified work. Free forever.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-:root {
-  --ink: #1a1410;
-  --parchment: #f5f0e8;
-  --warm: #c9a96e;
-  --rose: #b5736a;
-  --pale: #ede8df;
-  --muted: #7a6e64;
-  --card-bg: #ffffff;
-  --nav-bg: rgba(245,240,232,0.92);
-  --success: #5a8a5e;
-  --error: #b5736a;
-  --warning: #c9a96e;
+/* ── TOKENS ── */
+:root{
+  --pink:    #FDB5CE;
+  --ice:     #EBF4F6;
+  --olive:   #AEB877;
+  --lime:    #D8E983;
+  --butter:  #FFFBB1;
+  --mint:    #A5C89E;
+  --teal:    #7AB2B2;
+  --ocean:   #088395;
+  --deep:    #09637E;
+
+  --bg:      #EBF4F6;
+  --surface: rgba(255,255,255,0.62);
+  --glass:   rgba(255,255,255,0.45);
+  --ink:     #09637E;
+  --ink-soft:#3a7a8a;
+  --muted:   #6a9aaa;
+
+  --grad-hero: linear-gradient(135deg, #EBF4F6 0%, #FFFBB1 30%, #FDB5CE 60%, #A5C89E 100%);
+  --grad-teal: linear-gradient(135deg, #088395, #09637E);
+  --grad-pop:  linear-gradient(135deg, #D8E983, #A5C89E, #7AB2B2);
+  --grad-warm: linear-gradient(135deg, #FFFBB1, #FDB5CE, #D8E983);
+  --grad-cool: linear-gradient(135deg, #7AB2B2, #088395, #09637E);
+  --grad-card: linear-gradient(145deg, rgba(255,255,255,0.7), rgba(235,244,246,0.4));
+
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 8px 32px rgba(8,131,149,0.12), 0 2px 8px rgba(8,131,149,0.08);
+  --shadow-lg: 0 20px 60px rgba(8,131,149,0.18), 0 8px 24px rgba(9,99,126,0.12);
+  --shadow-glow: 0 0 40px rgba(253,181,206,0.35), 0 8px 32px rgba(8,131,149,0.15);
 }
 
-[data-theme="dark"] {
-  --ink: #e8e0d2;
-  --parchment: #141210;
-  --pale: #1e1a16;
-  --muted: #9e9080;
-  --card-bg: #1e1a16;
-  --nav-bg: rgba(18,16,14,0.92);
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--parchment);
+html{scroll-behavior:smooth}
+body{
+  background: var(--bg);
   color: var(--ink);
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
   min-height: 100vh;
-  transition: background 0.4s ease, color 0.4s ease;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.4;
+/* ── ANIMATED MESH BACKGROUND ── */
+.mesh-bg {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+}
+.mesh-blob {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.45;
+  animation: blobFloat 12s ease-in-out infinite alternate;
+}
+.blob1{width:600px;height:600px;background:var(--pink);top:-100px;right:-100px;animation-delay:0s}
+.blob2{width:500px;height:500px;background:var(--butter);bottom:-100px;left:-100px;animation-delay:-4s}
+.blob3{width:400px;height:400px;background:var(--mint);top:40%;left:40%;animation-delay:-8s}
+.blob4{width:300px;height:300px;background:var(--teal);opacity:0.3;top:20%;left:10%;animation-delay:-2s}
+.blob5{width:350px;height:350px;background:var(--lime);opacity:0.3;bottom:20%;right:15%;animation-delay:-6s}
+
+@keyframes blobFloat{
+  0%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-40px) scale(1.05)}
+  66%{transform:translate(-20px,20px) scale(0.97)}
+  100%{transform:translate(15px,-15px) scale(1.03)}
 }
 
-/* NAV */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 4rem;
-  background: var(--nav-bg);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(201,169,110,0.2);
+/* ── NAV ── */
+nav{
+  position:fixed; top:0; width:100%; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 5vw;
+  background:rgba(235,244,246,0.7);
+  backdrop-filter:blur(20px) saturate(1.8);
+  border-bottom:1px solid rgba(255,255,255,0.6);
+  box-shadow:0 1px 0 rgba(8,131,149,0.06);
 }
-
 .nav-logo {
-  font-family: 'Petit Formal Script', cursive;
-  font-size: 1.6rem;
-  color: var(--warm);
-  text-decoration: none;
+  font-family:'DM Serif Display',serif; font-style:italic;
+  font-size:1.45rem; color:var(--deep);
+  text-decoration:none; letter-spacing:-0.01em;
+  background: var(--grad-teal);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:.7rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; font-weight:500;
+  transition:color .25s;
+}
+.nav-links a:hover{color:var(--ocean)}
+.nav-cta{
+  background: var(--grad-teal);
+  color:white !important; padding:.5rem 1.4rem;
+  border-radius:50px; font-weight:600 !important;
+  box-shadow:0 4px 16px rgba(8,131,149,0.35);
+  transition:transform .2s, box-shadow .2s !important;
+}
+.nav-cta:hover{transform:translateY(-2px) !important; box-shadow:0 8px 24px rgba(8,131,149,0.45) !important}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.theme-pill{
+  background:var(--glass); border:1px solid rgba(255,255,255,0.7);
+  border-radius:50px; padding:.4rem 1rem; cursor:pointer;
+  font-size:.62rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--ink-soft); font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:500; backdrop-filter:blur(8px); transition:all .3s;
+}
+.theme-pill:hover{background:rgba(255,255,255,0.8); color:var(--ocean)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh; display:grid; grid-template-columns:1fr 1fr;
+  align-items:center; gap:3vw; padding:9rem 5vw 5rem;
+  position:relative;
+}
+
+/* big floating gradient orb behind hero text */
+.hero::before{
+  content:''; position:absolute; top:-10%; left:-5%;
+  width:65%; height:120%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(253,181,206,0.25) 0%, rgba(255,251,177,0.15) 40%, transparent 70%);
+  pointer-events:none;
+}
+
+.hero-left{animation:heroIn .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes heroIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-pill{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background: linear-gradient(135deg, rgba(255,251,177,0.8), rgba(253,181,206,0.6));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:50px; padding:.4rem 1rem; margin-bottom:1.5rem;
+  font-size:.65rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--deep); font-weight:600; backdrop-filter:blur(8px);
+  box-shadow:0 4px 16px rgba(253,181,206,0.3);
+}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--ocean);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+
+h1.hero-h1{
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(3.2rem,6.5vw,6rem);
+  line-height:.96; letter-spacing:-.03em;
+  margin-bottom:1.5rem; color:var(--deep);
+}
+h1.hero-h1 .gradient-text{
+  background: linear-gradient(135deg, #088395 0%, #7AB2B2 40%, #FDB5CE 75%, #D8E983 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; display:inline-block;
+}
+h1.hero-h1 .italic-serif{
+  font-family:'DM Serif Display',serif; font-style:italic;
+  font-weight:400; letter-spacing:-.01em;
+}
+
+.hero-sub{
+  font-size:1.05rem; color:var(--muted); line-height:1.75;
+  max-width:440px; margin-bottom:2.5rem; font-weight:400;
+}
+
+.hero-btns{display:flex; gap:.85rem; flex-wrap:wrap; align-items:center; margin-bottom:2.5rem}
+
+.btn-hero{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background: var(--grad-teal);
+  color:white; border:none; border-radius:50px;
+  padding:.85rem 2.2rem; font-family:'Cabinet Grotesk',sans-serif;
+  font-size:.78rem; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; cursor:pointer; text-decoration:none;
+  box-shadow: 0 8px 28px rgba(8,131,149,0.4);
+  transition:transform .25s, box-shadow .25s;
+}
+.btn-hero:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(8,131,149,0.55)}
+.btn-hero-ghost{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background: rgba(255,255,255,0.5);
+  color:var(--ink); border:1.5px solid rgba(255,255,255,0.9);
+  border-radius:50px; padding:.85rem 2.2rem;
+  font-family:'Cabinet Grotesk',sans-serif; font-size:.78rem;
+  font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  cursor:pointer; text-decoration:none; backdrop-filter:blur(10px);
+  transition:all .25s; box-shadow:0 4px 16px rgba(8,131,149,0.1);
+}
+.btn-hero-ghost:hover{background:rgba(255,255,255,0.8); transform:translateY(-2px)}
+
+/* trust row */
+.hero-trust{display:flex;gap:2rem;flex-wrap:wrap}
+.trust-stat{}
+.trust-stat .num{
+  font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800;
+  background: var(--grad-teal);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; line-height:1;
+}
+.trust-stat .lbl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;font-weight:500}
+
+/* ── FEATURED POEM CARD (hero right) ── */
+.hero-right{animation:heroIn .9s .15s cubic-bezier(.16,1,.3,1) both}
+
+.poem-hero-card{
+  background: var(--grad-card);
+  border:1.5px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius); padding:0; overflow:hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(8,131,149,0.05);
+  backdrop-filter:blur(20px);
+  transition:transform .4s;
+}
+.poem-hero-card:hover{transform:translateY(-6px) rotate(-.5deg)}
+
+.phc-top{
+  background: linear-gradient(135deg, #088395 0%, #7AB2B2 50%, #FDB5CE 100%);
+  padding:2rem; position:relative; overflow:hidden; min-height:180px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+.phc-top::before{
+  content:''; position:absolute; inset:0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.phc-badges{display:flex;gap:.5rem;margin-bottom:1rem;position:relative;z-index:1}
+.badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
+  border-radius:50px;padding:.25rem .75rem;font-size:.58rem;
+  letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,0.95);font-weight:600;
+  backdrop-filter:blur(6px);
+}
+.badge-verified{background:rgba(165,200,158,0.35)!important;border-color:rgba(165,200,158,0.6)!important}
+.phc-title{
+  font-family:'DM Serif Display',serif;font-style:italic;
+  font-size:1.85rem;font-weight:400;color:white;line-height:1.05;
+  position:relative;z-index:1;text-shadow:0 2px 16px rgba(9,99,126,0.4);
+}
+.phc-author{font-size:.72rem;color:rgba(255,255,255,0.75);margin-top:.3rem;position:relative;z-index:1;letter-spacing:.08em}
+.phc-body{padding:1.75rem}
+.phc-lines{
+  font-family:'DM Serif Display',serif;font-style:italic;
+  font-size:1rem;line-height:1.95;color:var(--ink-soft);
+  border-left:3px solid var(--pink);padding-left:1rem;margin-bottom:1.25rem;
+}
+.phc-footer{display:flex;align-items:center;justify-content:space-between}
+.read-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ocean);text-decoration:none;
+  transition:gap .25s, color .25s;
+}
+.read-link:hover{gap:.7rem;color:var(--deep)}
+.phc-tag{
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  background:linear-gradient(135deg,rgba(216,233,131,0.4),rgba(165,200,158,0.4));
+  border:1px solid rgba(174,184,119,0.4);
+  color:var(--ink-soft);padding:.25rem .75rem;border-radius:50px;font-weight:500;
+}
+
+/* ── SCROLL STRIP ── */
+.scroll-strip{
+  overflow:hidden;padding:1.25rem 0;
+  border-top:1px solid rgba(8,131,149,0.1);
+  border-bottom:1px solid rgba(8,131,149,0.1);
+  background:rgba(255,255,255,0.35);backdrop-filter:blur(10px);
+}
+.scroll-track{display:flex;animation:scrollLeft 25s linear infinite;width:max-content;gap:3rem;align-items:center;padding:0 3rem}
+.scroll-track:hover{animation-play-state:paused}
+.scroll-item{
+  white-space:nowrap;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;display:flex;align-items:center;gap:.75rem;flex-shrink:0;
+}
+.scroll-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.dot-pink{background:var(--pink)}
+.dot-teal{background:var(--teal)}
+.dot-lime{background:var(--lime)}
+.dot-mint{background:var(--mint)}
+@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION SKELETON ── */
+.section{padding:7rem 5vw;position:relative}
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ocean);font-weight:600;margin-bottom:.75rem;
+}
+.section-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--ocean)}
+.section-h2{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  letter-spacing:-.03em;line-height:.98;margin-bottom:1rem;color:var(--deep);
+}
+.section-h2 em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;color:var(--ocean)}
+.section-sub{font-size:1rem;color:var(--muted);line-height:1.75;max-width:520px;margin-bottom:3rem}
+
+/* ── POEMS GRID ── */
+.poems-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+
+.poem-card{
+  background: var(--grad-card);
+  border:1.5px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius); overflow:hidden;
+  box-shadow:var(--shadow); backdrop-filter:blur(16px);
+  cursor:pointer; transition:transform .35s, box-shadow .35s;
+}
+.poem-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+
+.pc-cover{
+  height:160px; position:relative; overflow:hidden;
+  display:flex;align-items:flex-end;padding:1.2rem;
+}
+.pc-cover-inner{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:transform .5s;
+}
+.poem-card:hover .pc-cover-inner{transform:scale(1.05)}
+.pc-cover-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,99,126,0.6),transparent)}
+.pc-cover-label{
+  position:relative;z-index:1;
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
+  color:white;padding:.22rem .65rem;border-radius:50px;font-weight:600;backdrop-filter:blur(4px);
+}
+.pc-body{padding:1.4rem}
+.pc-title{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:.3rem;color:var(--deep)}
+.pc-author{font-size:.7rem;color:var(--muted);margin-bottom:.85rem;letter-spacing:.05em}
+.pc-excerpt{font-size:.85rem;color:var(--ink-soft);line-height:1.75;font-style:italic}
+.pc-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.9rem 1.4rem;border-top:1px solid rgba(8,131,149,0.1);
+}
+.pc-verified-badge{
+  display:flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:600;
+  color:var(--sage);letter-spacing:.1em;text-transform:uppercase;
+}
+.pc-read{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ocean);text-decoration:none}
+
+/* ── MISSION SECTION ── */
+.mission-section{
+  background: linear-gradient(160deg, #09637E 0%, #088395 40%, #7AB2B2 100%);
+  padding:7rem 5vw; position:relative; overflow:hidden;
+}
+.mission-section::before{
+  content:'';position:absolute;top:-20%;right:-10%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(253,181,206,0.2),transparent 65%);
+  pointer-events:none;
+}
+.mission-section::after{
+  content:'';position:absolute;bottom:-20%;left:-5%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(216,233,131,0.15),transparent 65%);
+  pointer-events:none;
+}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1}
+.mission-h2{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2.2rem,4vw,3.4rem);letter-spacing:-.03em;
+  line-height:.98;color:white;margin-bottom:1rem;
+}
+.mission-h2 em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;color:var(--butter)}
+.mission-sub{font-size:1rem;color:rgba(235,244,246,0.65);line-height:1.8;max-width:480px;margin-bottom:1.5rem}
+.mission-sub2{font-size:.9rem;color:rgba(235,244,246,0.45);line-height:1.85;max-width:480px}
+.pillars{display:flex;flex-direction:column;gap:1rem}
+.pillar{
+  display:flex;align-items:flex-start;gap:1.1rem;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--radius-sm);padding:1.35rem;
+  backdrop-filter:blur(12px);
+  transition:background .3s, transform .3s;
+}
+.pillar:hover{background:rgba(255,255,255,0.14);transform:translateX(4px)}
+.pillar-ico{
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.ico-pink{background:linear-gradient(135deg,rgba(253,181,206,0.4),rgba(253,181,206,0.2))}
+.ico-lime{background:linear-gradient(135deg,rgba(216,233,131,0.4),rgba(216,233,131,0.2))}
+.ico-mint{background:linear-gradient(135deg,rgba(165,200,158,0.4),rgba(165,200,158,0.2))}
+.ico-butter{background:linear-gradient(135deg,rgba(255,251,177,0.4),rgba(255,251,177,0.2))}
+.pillar-title{font-size:.82rem;font-weight:700;color:white;margin-bottom:.25rem;letter-spacing:.02em}
+.pillar-desc{font-size:.8rem;color:rgba(235,244,246,0.55);line-height:1.65}
+
+/* ── CURATOR ── */
+.curator-section{padding:7rem 5vw;position:relative}
+.curator-section::before{
+  content:'';position:absolute;top:0;right:0;width:50%;height:100%;
+  background:linear-gradient(135deg,rgba(255,251,177,0.12),rgba(253,181,206,0.1));
+  border-radius:var(--radius) 0 0 var(--radius);pointer-events:none;
+}
+.curator-grid{display:grid;grid-template-columns:360px 1fr;gap:5rem;align-items:center}
+.curator-img-wrap{position:relative}
+.curator-photo{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  border-radius:var(--radius);display:block;background:var(--ice);
+  box-shadow:var(--shadow-lg);
+}
+.curator-badge{
+  position:absolute;bottom:-1rem;right:-1rem;
+  background: var(--grad-teal);
+  border-radius:var(--radius-sm);padding:1rem 1.25rem;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.cb-num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:white;line-height:1}
+.cb-lbl{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(235,244,246,0.7);margin-top:.2rem;font-weight:500}
+.curator-name{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;
+  line-height:.98;color:var(--deep);margin-bottom:.4rem;
+}
+.curator-role{
+  display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;
+}
+.role-chip{
+  background: linear-gradient(135deg, rgba(8,131,149,0.1), rgba(122,178,178,0.1));
+  border:1px solid rgba(8,131,149,0.2);
+  border-radius:50px;padding:.28rem .85rem;
+  font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ocean);font-weight:600;
+}
+.curator-bio{font-size:.98rem;color:var(--muted);line-height:1.85;margin-bottom:1.5rem}
+.curator-quote{
+  background: linear-gradient(135deg, rgba(253,181,206,0.15), rgba(255,251,177,0.15));
+  border:1px solid rgba(253,181,206,0.3);
+  border-radius:var(--radius-sm);padding:1.25rem 1.5rem;margin-bottom:1.75rem;
+}
+.curator-quote p{
+  font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05rem;
+  color:var(--ink-soft);line-height:1.7;
+}
+
+/* ── CATEGORIES ── */
+.cats-section{
+  background: linear-gradient(135deg, #EBF4F6 0%, rgba(255,251,177,0.3) 50%, rgba(253,181,206,0.2) 100%);
+  padding:5rem 5vw;
+}
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.cat-card{
+  background: var(--grad-card);
+  border:1.5px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius); padding:1.75rem 1.25rem;
+  text-align:center; text-decoration:none; display:block;
+  backdrop-filter:blur(12px); box-shadow:var(--shadow);
+  transition:transform .3s, box-shadow .3s;
+  position:relative; overflow:hidden;
+}
+.cat-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;border-radius:var(--radius);
+}
+.cat-pink::before{background:linear-gradient(135deg,rgba(253,181,206,0.35),rgba(255,251,177,0.25))}
+.cat-teal::before{background:linear-gradient(135deg,rgba(122,178,178,0.35),rgba(8,131,149,0.2))}
+.cat-lime::before{background:linear-gradient(135deg,rgba(216,233,131,0.4),rgba(165,200,158,0.3))}
+.cat-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.cat-card:hover::before{opacity:1}
+.cat-icon{font-size:1.7rem;margin-bottom:.85rem;position:relative;z-index:1}
+.cat-name{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--deep);margin-bottom:.2rem;position:relative;z-index:1}
+.cat-count{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;position:relative;z-index:1}
+
+/* ── SUBMIT STEPS ── */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-bottom:2.5rem}
+.step-card{
+  background: var(--grad-card);
+  border:1.5px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius); padding:2rem;
+  backdrop-filter:blur(16px); box-shadow:var(--shadow);
+  transition:transform .3s, box-shadow .3s;
+  position:relative; overflow:hidden;
+}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.step-card::after{
+  content:attr(data-step);
+  position:absolute;right:1rem;top:.75rem;
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:5rem;line-height:1;color:rgba(8,131,149,0.07);
+  letter-spacing:-.04em;
+}
+.step-dot{
+  width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;margin-bottom:1rem;
+}
+.step-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:.6rem;letter-spacing:-.01em}
+.step-desc{font-size:.82rem;color:var(--muted);line-height:1.75}
+
+/* ── TESTIMONIALS ── */
+.testi-section{
+  padding:7rem 5vw;
+  background:linear-gradient(160deg,rgba(122,178,178,0.12) 0%,rgba(235,244,246,0.5) 50%,rgba(253,181,206,0.1) 100%);
+}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.testi-card{
+  background: var(--grad-card);
+  border:1.5px solid rgba(255,255,255,0.85);
+  border-radius:var(--radius); padding:2rem;
+  box-shadow:var(--shadow); backdrop-filter:blur(16px);
+  transition:transform .3s;
+}
+.testi-card:hover{transform:translateY(-4px)}
+.testi-stars{display:flex;gap:2px;margin-bottom:1rem}
+.testi-stars span{font-size:.9rem}
+.testi-text{
+  font-family:'DM Serif Display',serif;font-style:italic;
+  font-size:.98rem;color:var(--ink-soft);line-height:1.8;margin-bottom:1.25rem;
+}
+.testi-author{display:flex;align-items:center;gap:.75rem}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;font-weight:700;color:white;flex-shrink:0;
+  font-family:'Syne',sans-serif;
+}
+.av-pink{background:linear-gradient(135deg,var(--pink),var(--teal))}
+.av-teal{background:linear-gradient(135deg,var(--teal),var(--ocean))}
+.av-lime{background:linear-gradient(135deg,var(--lime),var(--mint))}
+.testi-name{font-size:.82rem;font-weight:700;color:var(--deep)}
+.testi-role{font-size:.68rem;color:var(--muted)}
+
+/* ── CTA SECTION ── */
+.cta-section{
+  margin:0 3vw 3vw;border-radius:28px;
+  background: linear-gradient(135deg, #09637E 0%, #088395 35%, #7AB2B2 70%, #FDB5CE 100%);
+  padding:6rem 6vw; text-align:center; position:relative; overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,251,177,0.2),transparent 65%);
+  pointer-events:none;
+}
+.cta-section::after{
+  content:'✦   words   ✦   visions   ✦   poetry   ✦   voices   ✦   words   ✦   visions';
+  position:absolute;bottom:1.5rem;left:0;right:0;
+  font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);text-align:center;font-weight:600;
+}
+.cta-pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
+  border-radius:50px;padding:.4rem 1.1rem;margin-bottom:1.25rem;
+  font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.9);font-weight:600;backdrop-filter:blur(8px);
+}
+.cta-h2{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.04em;line-height:.95;
+  color:white;margin-bottom:1.2rem;position:relative;z-index:1;
+}
+.cta-h2 em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400}
+.cta-sub{
+  font-size:1.05rem;color:rgba(255,255,255,0.65);
+  max-width:460px;margin:0 auto 2.5rem;line-height:1.75;
+  position:relative;z-index:1;
+}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-cta-primary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:white;color:var(--deep);
+  border:none;border-radius:50px;padding:.9rem 2.5rem;
+  font-family:'Cabinet Grotesk',sans-serif;font-size:.78rem;
+  font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 28px rgba(0,0,0,0.2);
+  transition:transform .25s,box-shadow .25s;
+}
+.btn-cta-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.3)}
+.btn-cta-ghost{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,0.15);color:white;
+  border:1.5px solid rgba(255,255,255,0.5);border-radius:50px;
+  padding:.9rem 2.5rem;font-family:'Cabinet Grotesk',sans-serif;
+  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;backdrop-filter:blur(10px);
+  transition:background .25s,transform .25s;
+}
+.btn-cta-ghost:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+footer{
+  background: linear-gradient(180deg, #09637E 0%, #064f66 100%);
+  padding:5rem 5vw 2.5rem; position:relative; overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:800px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--teal),var(--pink),var(--lime),var(--teal),transparent);
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{
+  font-family:'DM Serif Display',serif;font-style:italic;
+  font-size:1.85rem;color:var(--ice);display:block;margin-bottom:.75rem;
+}
+.footer-desc{font-size:.82rem;color:rgba(235,244,246,0.4);line-height:1.75;margin-bottom:1.25rem}
+.footer-social{display:flex;gap:.6rem}
+.soc{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(235,244,246,0.5);text-decoration:none;
+  transition:all .3s;
+}
+.soc:hover{background:rgba(255,255,255,0.18);color:var(--ice);border-color:rgba(255,255,255,0.35)}
+.footer-col h4{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:1.25rem;
+}
+.footer-col a{
+  display:block;font-size:.82rem;color:rgba(235,244,246,0.4);
+  text-decoration:none;margin-bottom:.6rem;transition:color .3s;
+}
+.footer-col a:hover{color:var(--ice)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);
+  font-size:.68rem;color:rgba(235,244,246,0.25);
+}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.up{opacity:1;transform:translateY(0)}
+.stagger-1{transition-delay:.07s}
+.stagger-2{transition-delay:.14s}
+.stagger-3{transition-delay:.21s}
+.stagger-4{transition-delay:.28s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;gap:3rem;padding:9rem 5vw 5rem}
+  .mission-grid,.curator-grid{grid-template-columns:1fr;gap:3rem}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
+  .hero-trust{gap:1.25rem}
 }
-
-.nav-back {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  transition: color 0.3s;
-}
-
-.nav-back:hover { color: var(--warm); }
-
-/* HERO */
-.submit-hero {
-  padding: 12rem 4rem 5rem;
-  text-align: center;
-  position: relative;
-}
-
-.submit-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center top, rgba(201,169,110,0.08), transparent 60%);
-  pointer-events: none;
-}
-
-.hero-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: var(--warm);
-  margin-bottom: 1rem;
-}
-
-.hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  font-weight: 300;
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title em { font-style: italic; color: var(--rose); }
-
-.hero-desc {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--muted);
-  max-width: 560px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-}
-
-.hero-rules {
-  display: inline-flex;
-  gap: 2rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border-top: 1px solid rgba(201,169,110,0.2);
-  padding-top: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-.hero-rules span { display: flex; align-items: center; gap: 0.4rem; }
-.hero-rules svg { color: var(--warm); }
-
-/* MAIN LAYOUT */
-.submit-main {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 0 4rem 8rem;
-}
-
-/* STEP INDICATOR */
-.steps {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 4rem;
-}
-
-.step {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex: 1;
-  position: relative;
-}
-
-.step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: calc(1.5rem + 0.75rem);
-  top: 50%;
-  width: calc(100% - 3.5rem);
-  height: 1px;
-  background: rgba(201,169,110,0.2);
-  transition: background 0.5s;
-}
-
-.step.completed:not(:last-child)::after { background: var(--warm); }
-
-.step-num {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  border: 1px solid rgba(201,169,110,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  color: var(--muted);
-  flex-shrink: 0;
-  transition: all 0.4s;
-  background: var(--parchment);
-  z-index: 1;
-}
-
-.step.active .step-num { border-color: var(--warm); color: var(--warm); }
-.step.completed .step-num { background: var(--warm); border-color: var(--warm); color: white; }
-
-.step-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.4s;
-  display: none;
-}
-
-@media (min-width: 600px) { .step-label { display: block; } }
-.step.active .step-label { color: var(--warm); }
-.step.completed .step-label { color: var(--ink); }
-
-/* FORM PANELS */
-.form-panel { display: none; animation: slideIn 0.4s ease; }
-.form-panel.active { display: block; }
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.panel-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  font-weight: 300;
-  margin-bottom: 0.5rem;
-}
-
-.panel-sub {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-}
-
-/* FORM FIELDS */
-.field-group {
-  margin-bottom: 1.75rem;
-}
-
-label {
-  display: block;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--warm);
-  margin-bottom: 0.6rem;
-}
-
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-  width: 100%;
-  background: var(--card-bg);
-  border: 1px solid rgba(201,169,110,0.25);
-  border-radius: 2px;
-  padding: 0.9rem 1.1rem;
-  color: var(--ink);
-  font-family: 'Jost', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 300;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  outline: none;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--warm);
-  box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
-}
-
-textarea { resize: vertical; min-height: 100px; line-height: 1.7; }
-
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-
-/* UPLOAD ZONES */
-.upload-zone {
-  border: 1.5px dashed rgba(201,169,110,0.35);
-  border-radius: 4px;
-  padding: 3rem 2rem;
-  text-align: center;
-  background: rgba(201,169,110,0.02);
-  transition: all 0.3s;
-  cursor: pointer;
-  position: relative;
-}
-
-.upload-zone:hover, .upload-zone.drag-over {
-  border-color: var(--warm);
-  background: rgba(201,169,110,0.06);
-}
-
-.upload-zone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.upload-icon { color: var(--warm); opacity: 0.6; margin-bottom: 1rem; }
-
-.upload-zone h4 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin-bottom: 0.4rem;
-}
-
-.upload-zone p {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  line-height: 1.6;
-}
-
-/* FILE PREVIEW */
-.file-preview {
-  display: none;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  background: var(--card-bg);
-  border: 1px solid rgba(201,169,110,0.2);
-  border-radius: 2px;
-  margin-top: 1rem;
-}
-
-.file-preview.show { display: flex; }
-.file-icon { color: var(--warm); flex-shrink: 0; }
-
-.file-info { flex: 1; min-width: 0; }
-.file-name { font-size: 0.85rem; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.file-size { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
-
-.file-remove {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted);
-  padding: 0.25rem;
-  transition: color 0.2s;
-}
-.file-remove:hover { color: var(--rose); }
-
-/* IMAGE PREVIEW */
-.img-preview-wrap { display: none; margin-top: 1rem; position: relative; }
-.img-preview-wrap.show { display: block; }
-.img-preview-wrap img {
-  width: 100%;
-  max-height: 280px;
-  object-fit: cover;
-  border-radius: 2px;
-  border: 1px solid rgba(201,169,110,0.2);
-}
-
-.img-remove {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: rgba(26,20,16,0.7);
-  border: none;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  transition: background 0.2s;
-}
-.img-remove:hover { background: var(--rose); }
-
-/* PDF READER PREVIEW */
-.pdf-preview-box {
-  display: none;
-  margin-top: 1.5rem;
-  border: 1px solid rgba(201,169,110,0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  background: var(--card-bg);
-}
-
-.pdf-preview-box.show { display: block; }
-
-.pdf-preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid rgba(201,169,110,0.15);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.pdf-canvas-wrap { padding: 1.5rem; overflow-x: auto; text-align: center; }
-#pdfCanvas { max-width: 100%; border-radius: 2px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-
-.pdf-nav { display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--muted); }
-.pdf-nav button {
-  background: none;
-  border: 1px solid rgba(201,169,110,0.3);
-  border-radius: 2px;
-  padding: 0.25rem 0.6rem;
-  cursor: pointer;
-  color: var(--muted);
-  font-size: 0.7rem;
-  transition: all 0.2s;
-}
-.pdf-nav button:hover { border-color: var(--warm); color: var(--warm); }
-.pdf-nav button:disabled { opacity: 0.3; cursor: default; }
-
-/* PLAGIARISM CHECK */
-.check-box {
-  border: 1px solid rgba(201,169,110,0.2);
-  border-radius: 4px;
-  padding: 2rem;
-  background: var(--card-bg);
-  margin-top: 2rem;
-}
-
-.check-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-
-.check-header svg { color: var(--warm); }
-
-.check-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 400;
-}
-
-.check-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
-
-.check-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: var(--ink);
-  color: var(--parchment);
-  border: none;
-  border-radius: 2px;
-  padding: 0.75rem 1.5rem;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-
-.check-btn:hover { background: var(--warm); transform: translateY(-1px); }
-.check-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-/* RESULT BADGES */
-.result-badge {
-  display: none;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  border-radius: 2px;
-  margin-top: 1.25rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.result-badge.show { display: flex; }
-
-.result-badge.pass {
-  background: rgba(90,138,94,0.1);
-  border: 1px solid rgba(90,138,94,0.3);
-  color: var(--success);
-}
-
-.result-badge.fail {
-  background: rgba(181,115,106,0.1);
-  border: 1px solid rgba(181,115,106,0.3);
-  color: var(--rose);
-}
-
-.result-badge.checking {
-  background: rgba(201,169,110,0.08);
-  border: 1px solid rgba(201,169,110,0.25);
-  color: var(--warm);
-}
-
-.result-detail {
-  display: none;
-  margin-top: 1rem;
-  padding: 1.25rem;
-  background: rgba(201,169,110,0.04);
-  border-left: 2px solid var(--warm);
-  font-size: 0.85rem;
-  line-height: 1.8;
-  color: var(--muted);
-}
-.result-detail.show { display: block; }
-
-/* SPINNER */
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(201,169,110,0.3);
-  border-top-color: var(--warm);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* PREVIEW CARD */
-.preview-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(201,169,110,0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 4px 30px rgba(26,20,16,0.08);
-}
-
-.preview-cover {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  background: linear-gradient(135deg, var(--pale), #d4c9b5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.preview-cover img { width: 100%; height: 100%; object-fit: cover; }
-
-.preview-body { padding: 2rem; }
-
-.preview-tag {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 0.6rem;
-}
-
-.preview-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-
-.preview-author {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  margin-bottom: 1.25rem;
-}
-
-.preview-excerpt {
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: var(--muted);
-  font-style: italic;
-  font-family: 'Cormorant Garamond', serif;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(201,169,110,0.15);
-}
-
-/* BUTTONS */
-.btn-row {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2.5rem;
-  align-items: center;
-}
-
-.btn-primary {
-  background: var(--ink);
-  color: var(--parchment);
-  border: none;
-  border-radius: 2px;
-  padding: 0.85rem 2rem;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-
-.btn-primary:hover { background: var(--warm); transform: translateY(-1px); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-.btn-secondary {
-  background: none;
-  border: 1px solid rgba(201,169,110,0.35);
-  color: var(--muted);
-  border-radius: 2px;
-  padding: 0.85rem 2rem;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-secondary:hover { border-color: var(--warm); color: var(--warm); }
-
-/* SUCCESS STATE */
-.success-state {
-  display: none;
-  text-align: center;
-  padding: 5rem 2rem;
-  animation: fadeUp 0.6s ease;
-}
-
-.success-state.show { display: block; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.success-icon {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  background: rgba(90,138,94,0.1);
-  border: 1px solid rgba(90,138,94,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
-  color: var(--success);
-}
-
-.success-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  font-weight: 300;
-  margin-bottom: 1rem;
-}
-
-.success-sub {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--muted);
-  max-width: 420px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.7;
-}
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--ink);
-  color: var(--parchment);
-  padding: 1rem 1.5rem;
-  border-radius: 2px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 9999;
-  max-width: 340px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { border-left: 3px solid var(--success); }
-.toast.error { border-left: 3px solid var(--rose); }
-
-/* DISCLAIMER */
-.disclaimer {
-  font-size: 0.72rem;
-  color: var(--muted);
-  line-height: 1.7;
-  padding: 1.25rem;
-  border: 1px solid rgba(201,169,110,0.15);
-  border-radius: 2px;
-  background: rgba(201,169,110,0.03);
-  margin-top: 2rem;
-}
-
-.disclaimer strong { color: var(--warm); }
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  nav { padding: 1.25rem 1.5rem; }
-  .submit-hero { padding: 10rem 1.5rem 4rem; }
-  .submit-main { padding: 0 1.5rem 6rem; }
-  .field-row { grid-template-columns: 1fr; }
-  .step-label { display: none !important; }
-}
-
-/* PUBLISHED BOARD */
-.board-section {
-  border-top: 1px solid rgba(201,169,110,0.2);
-  margin-top: 4rem;
-  padding-top: 4rem;
-}
-
-.board-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.board-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(201,169,110,0.15);
-  border-radius: 2px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 16px rgba(26,20,16,0.05);
-}
-
-.board-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(26,20,16,0.1);
-}
-
-.board-card-img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  background: linear-gradient(135deg, var(--pale), #d4c9b5);
-  display: block;
-}
-
-.board-card-body { padding: 1.25rem; }
-
-.board-card-tag {
-  font-size: 0.55rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 0.4rem;
-}
-
-.board-card-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.15rem;
-  font-weight: 400;
-  line-height: 1.25;
-  margin-bottom: 0.35rem;
-}
-
-.board-card-author {
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-.board-verified {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.55rem;
-  color: var(--success);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-top: 0.5rem;
-}
-
-.empty-board {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: var(--muted);
-}
-
-.empty-board svg { opacity: 0.2; margin-bottom: 1rem; }
-.empty-board p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; }
 </style>
 </head>
 <body>
 
+<!-- ANIMATED MESH -->
+<div class="mesh-bg" aria-hidden="true">
+  <div class="mesh-blob blob1"></div>
+  <div class="mesh-blob blob2"></div>
+  <div class="mesh-blob blob3"></div>
+  <div class="mesh-blob blob4"></div>
+  <div class="mesh-blob blob5"></div>
+</div>
+
+<!-- NAV -->
 <nav>
-  <a href="portfolio.html" class="nav-logo">Premanjan Pradhan</a>
-  <a href="portfolio.html" class="nav-back">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Back to Portfolio
-  </a>
+  <a href="#" class="nav-logo">Words & Visions</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#poems">Poems</a></li>
+    <li><a href="#poets">Poets</a></li>
+    <li><a href="#guidelines">Guidelines</a></li>
+    <li><a href="#submit" class="nav-cta">Submit Work</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-pill" onclick="toggleTheme()" id="themeBtn">&#9679; Dark</button>
+  </div>
 </nav>
 
 <!-- HERO -->
-<div class="submit-hero">
-  <p class="hero-label">Open Submissions</p>
-  <h1 class="hero-title">Share Your<br><em>Voice</em></h1>
-  <p class="hero-desc">Submit your original writings and poems to be featured on this platform. All work is verified for authenticity before publishing.</p>
-  <div class="hero-rules">
-    <span><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Original work only</span>
-    <span><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PDF format required</span>
-    <span><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI authenticity check</span>
-    <span><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Free to submit</span>
+<header class="hero">
+  <div class="hero-left">
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      Open Platform &bull; Poetry & Prose &bull; Est. 2024
+    </div>
+    <h1 class="hero-h1">
+      Every voice<br>
+      <span class="italic-serif">deserves</span><br>
+      <span class="gradient-text">its reader.</span>
+    </h1>
+    <p class="hero-sub">An open poetry publishing platform curated by educator-poet Premanjan Pradhan. Submit original verified work. Discover real voices. Free forever.</p>
+    <div class="hero-btns">
+      <a href="#submit" class="btn-hero">&#128396; Submit Your Work</a>
+      <a href="#poems" class="btn-hero-ghost">&#128214; Read Poems</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-stat"><div class="num">42+</div><div class="lbl">Published Works</div></div>
+      <div class="trust-stat"><div class="num">18</div><div class="lbl">Poets</div></div>
+      <div class="trust-stat"><div class="num">6</div><div class="lbl">Languages</div></div>
+      <div class="trust-stat"><div class="num">100%</div><div class="lbl">Free Forever</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="poem-hero-card">
+      <div class="phc-top">
+        <div class="phc-badges">
+          <span class="badge">&#10022; Featured This Week</span>
+          <span class="badge badge-verified">&#10003; Verified Original</span>
+        </div>
+        <h2 class="phc-title">Mourning Son<br>to His Mother</h2>
+        <p class="phc-author">Premanjan Pradhan &mdash; Elegy</p>
+      </div>
+      <div class="phc-body">
+        <div class="phc-lines">
+          Crying on second of year&apos;s month first<br>
+          Nectar from her bosom quenched my thirst.<br>
+          Sparkled in my tears an image cryin&apos;<br>
+          Whom later my mind thought divine.
+        </div>
+        <div class="phc-footer">
+          <span class="phc-tag">Elegy &bull; Love</span>
+          <a href="#" class="read-link">Read full poem &#8594;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SCROLL STRIP -->
+<div class="scroll-strip" aria-hidden="true">
+  <div class="scroll-track" id="scrollTrack">
+    <span class="scroll-item"><span class="scroll-dot dot-pink"></span>Submit Your Poem</span>
+    <span class="scroll-item"><span class="scroll-dot dot-teal"></span>Verified Original</span>
+    <span class="scroll-item"><span class="scroll-dot dot-lime"></span>Free Forever</span>
+    <span class="scroll-item"><span class="scroll-dot dot-mint"></span>42+ Published Works</span>
+    <span class="scroll-item"><span class="scroll-dot dot-pink"></span>Curated by an Educator</span>
+    <span class="scroll-item"><span class="scroll-dot dot-teal"></span>6 Languages Accepted</span>
+    <span class="scroll-item"><span class="scroll-dot dot-lime"></span>18 Contributing Poets</span>
+    <span class="scroll-item"><span class="scroll-dot dot-mint"></span>AI Authenticity Check</span>
+    <span class="scroll-item"><span class="scroll-dot dot-pink"></span>Submit Your Poem</span>
+    <span class="scroll-item"><span class="scroll-dot dot-teal"></span>Verified Original</span>
+    <span class="scroll-item"><span class="scroll-dot dot-lime"></span>Free Forever</span>
+    <span class="scroll-item"><span class="scroll-dot dot-mint"></span>42+ Published Works</span>
+    <span class="scroll-item"><span class="scroll-dot dot-pink"></span>Curated by an Educator</span>
+    <span class="scroll-item"><span class="scroll-dot dot-teal"></span>6 Languages Accepted</span>
+    <span class="scroll-item"><span class="scroll-dot dot-lime"></span>18 Contributing Poets</span>
+    <span class="scroll-item"><span class="scroll-dot dot-mint"></span>AI Authenticity Check</span>
   </div>
 </div>
 
-<!-- MAIN FORM -->
-<div class="submit-main">
+<!-- FEATURED POEMS -->
+<section class="section" id="poems">
+  <p class="section-eyebrow">Recently Published</p>
+  <h2 class="section-h2">Featured <em>Works</em></h2>
+  <p class="section-sub">Original, verified writings from the community &mdash; each one authenticated, each one permanent.</p>
 
-  <!-- STEPS -->
-  <div class="steps" id="stepsBar">
-    <div class="step active" id="step-1">
-      <div class="step-num">1</div>
-      <span class="step-label">Your Details</span>
+  <div class="poems-grid">
+    <div class="poem-card reveal">
+      <div class="pc-cover">
+        <div class="pc-cover-inner" id="cover0" style="background:linear-gradient(135deg,#AEB877,#D8E983,#A5C89E)"></div>
+        <div class="pc-cover-overlay"></div>
+        <span class="pc-cover-label">Nature &amp; Labour</span>
+      </div>
+      <div class="pc-body">
+        <h3 class="pc-title">Saffron</h3>
+        <p class="pc-author">Premanjan Pradhan</p>
+        <p class="pc-excerpt">A child from the valley, eyeing the vegetation came across the purple hues of heaven&hellip;</p>
+      </div>
+      <div class="pc-footer">
+        <div class="pc-verified-badge">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Verified
+        </div>
+        <a href="#" class="pc-read">Read &rarr;</a>
+      </div>
     </div>
-    <div class="step" id="step-2">
-      <div class="step-num">2</div>
-      <span class="step-label">Upload Work</span>
+
+    <div class="poem-card reveal stagger-1">
+      <div class="pc-cover">
+        <div class="pc-cover-inner" id="cover1" style="background:linear-gradient(135deg,#09637E,#088395,#7AB2B2)"></div>
+        <div class="pc-cover-overlay"></div>
+        <span class="pc-cover-label">Dark Verse</span>
+      </div>
+      <div class="pc-body">
+        <h3 class="pc-title">Devil&apos;s Advocate</h3>
+        <p class="pc-author">Anwesha Tripathy</p>
+        <p class="pc-excerpt">Will you cry when I die? Will you remember me for who I was&hellip;</p>
+      </div>
+      <div class="pc-footer">
+        <div class="pc-verified-badge">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Verified
+        </div>
+        <a href="#" class="pc-read">Read &rarr;</a>
+      </div>
     </div>
-    <div class="step" id="step-3">
-      <div class="step-num">3</div>
-      <span class="step-label">Authenticity</span>
-    </div>
-    <div class="step" id="step-4">
-      <div class="step-num">4</div>
-      <span class="step-label">Preview</span>
+
+    <div class="poem-card reveal stagger-2">
+      <div class="pc-cover">
+        <div class="pc-cover-inner" id="cover2" style="background:linear-gradient(135deg,#FDB5CE,#FFFBB1,#A5C89E)"></div>
+        <div class="pc-cover-overlay"></div>
+        <span class="pc-cover-label">Legacy &amp; Time</span>
+      </div>
+      <div class="pc-body">
+        <h3 class="pc-title">Victor del Hora</h3>
+        <p class="pc-author">Premanjan Pradhan</p>
+        <p class="pc-excerpt">Invincible you name him or destroyer may please &mdash; but he is wrapped around my wrist&hellip;</p>
+      </div>
+      <div class="pc-footer">
+        <div class="pc-verified-badge">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Verified
+        </div>
+        <a href="#" class="pc-read">Read &rarr;</a>
+      </div>
     </div>
   </div>
 
-  <!-- STEP 1: DETAILS -->
-  <div class="form-panel active" id="panel-1">
-    <h2 class="panel-title">About You</h2>
-    <p class="panel-sub">Tell us who you are. Your name and email will appear alongside your published work.</p>
-
-    <div class="field-row">
-      <div class="field-group">
-        <label>Full Name *</label>
-        <input type="text" id="authorName" placeholder="Your full name" />
-      </div>
-      <div class="field-group">
-        <label>Email Address *</label>
-        <input type="email" id="authorEmail" placeholder="your@email.com" />
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field-group">
-        <label>Work Type *</label>
-        <select id="workType">
-          <option value="">Select a type…</option>
-          <option value="Poem">Poem</option>
-          <option value="Short Story">Short Story</option>
-          <option value="Essay">Essay</option>
-          <option value="Memoir">Memoir</option>
-          <option value="Flash Fiction">Flash Fiction</option>
-          <option value="Literary Fiction">Literary Fiction</option>
-          <option value="Prose Poetry">Prose Poetry</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Title of Work *</label>
-        <input type="text" id="workTitle" placeholder="The title of your piece" />
-      </div>
-    </div>
-
-    <div class="field-group">
-      <label>Short Bio</label>
-      <textarea id="authorBio" placeholder="A few lines about yourself — who you are, what you write about…" rows="3"></textarea>
-    </div>
-
-    <div class="field-group">
-      <label>Social Handle (optional)</label>
-      <input type="text" id="authorSocial" placeholder="@yourhandle — Instagram, Twitter, etc." />
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-primary" onclick="goToStep(2)">Continue →</button>
-    </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="#" class="btn-hero-ghost" style="display:inline-flex">Browse All Works &rarr;</a>
   </div>
+</section>
 
-  <!-- STEP 2: UPLOAD -->
-  <div class="form-panel" id="panel-2">
-    <h2 class="panel-title">Upload Your Work</h2>
-    <p class="panel-sub">Upload your writing as a PDF and add a cover image that captures the spirit of your piece.</p>
-
-    <!-- PDF UPLOAD -->
-    <div class="field-group">
-      <label>Your Writing (PDF) *</label>
-      <div class="upload-zone" id="pdfZone">
-        <input type="file" id="pdfInput" accept=".pdf" onchange="handlePDFUpload(event)">
-        <div class="upload-icon">
-          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="12" y1="18" x2="12" y2="12"/>
-            <line x1="9" y1="15" x2="15" y2="15"/>
-          </svg>
-        </div>
-        <h4>Drop your PDF here</h4>
-        <p>or click to browse · Max 10MB · PDF only</p>
-      </div>
-
-      <div class="file-preview" id="pdfPreview">
-        <div class="file-icon">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-          </svg>
-        </div>
-        <div class="file-info">
-          <div class="file-name" id="pdfFileName">—</div>
-          <div class="file-size" id="pdfFileSize">—</div>
-        </div>
-        <button class="file-remove" onclick="removePDF()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-
-      <!-- PDF PREVIEW -->
-      <div class="pdf-preview-box" id="pdfPreviewBox">
-        <div class="pdf-preview-header">
-          <span>Preview</span>
-          <div class="pdf-nav">
-            <button id="pdfPrev" onclick="changePDFPage(-1)" disabled>← Prev</button>
-            <span id="pdfPageInfo">Page 1 of 1</span>
-            <button id="pdfNext" onclick="changePDFPage(1)" disabled>Next →</button>
-          </div>
-        </div>
-        <div class="pdf-canvas-wrap">
-          <canvas id="pdfCanvas"></canvas>
-        </div>
-      </div>
+<!-- MISSION -->
+<div class="mission-section">
+  <div class="mission-grid">
+    <div>
+      <p class="section-eyebrow" style="color:rgba(255,251,177,0.8)">Our Mission</p>
+      <h2 class="mission-h2">A home for<br><em>every voice.</em></h2>
+      <p class="mission-sub">Words & Visions was built on one belief: every person who has felt something deeply enough to write it down deserves to be read. Not just published &mdash; truly read.</p>
+      <p class="mission-sub2">We are not a literary journal with gatekeepers. We are a curated space where original, verified writing finds a permanent, beautiful home &mdash; in any language, from any voice.</p>
     </div>
-
-    <!-- IMAGE UPLOAD -->
-    <div class="field-group">
-      <label>Cover Image *</label>
-      <div class="upload-zone" id="imgZone">
-        <input type="file" id="imgInput" accept="image/*" onchange="handleImageUpload(event)">
-        <div class="upload-icon">
-          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-        </div>
-        <h4>Add a cover image</h4>
-        <p>JPG, PNG or WEBP · Recommended 800×450px · Max 5MB</p>
-      </div>
-      <div class="img-preview-wrap" id="imgPreviewWrap">
-        <img id="imgPreview" src="" alt="Cover preview">
-        <button class="img-remove" onclick="removeImage()">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="disclaimer">
-      <strong>Note:</strong> By uploading, you confirm this is your original work and you hold the rights to it. Submitting plagiarised or AI-generated content is grounds for removal from the platform.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
-      <button class="btn-primary" onclick="goToStep(3)">Continue →</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: AUTHENTICITY CHECK -->
-  <div class="form-panel" id="panel-3">
-    <h2 class="panel-title">Authenticity Check</h2>
-    <p class="panel-sub">We run your work through an AI-powered authenticity check to verify it is original, human-written, and not plagiarised. This protects both you and other writers on this platform.</p>
-
-    <div class="check-box">
-      <div class="check-header">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-ico ico-pink">&#9997;&#65039;</div>
         <div>
-          <div class="check-title">Originality Verification</div>
-          <div class="check-subtitle">Powered by Claude AI · Takes 10–20 seconds</div>
+          <div class="pillar-title">Open Submission</div>
+          <div class="pillar-desc">Any poet or writer may submit. No rejection letters, no prestige gatekeeping. The work speaks for itself.</div>
         </div>
       </div>
-
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;">
-        Our system will analyse your writing for signs of plagiarism, AI generation, and other authenticity concerns. Works that pass the check are marked as <strong style="color:var(--success)">Verified Original</strong> on the platform.
-      </p>
-
-      <button class="check-btn" id="checkBtn" onclick="runAuthenticityCheck()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Run Authenticity Check
-      </button>
-
-      <div class="result-badge checking" id="checkingBadge">
-        <div class="spinner"></div>
-        <span>Analysing your work for originality and authenticity…</span>
-      </div>
-
-      <div class="result-badge pass" id="passBadge">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <div class="pillar reveal stagger-1">
+        <div class="pillar-ico ico-lime">&#128737;</div>
         <div>
-          <strong>Verified Original</strong>
-          <div id="passDetail" style="font-weight:300;margin-top:0.2rem;font-size:0.8rem;opacity:0.85;"></div>
+          <div class="pillar-title">Verified Original</div>
+          <div class="pillar-desc">AI-powered authenticity check on every submission. Protects your voice and every voice on this platform.</div>
         </div>
       </div>
-
-      <div class="result-badge fail" id="failBadge">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      <div class="pillar reveal stagger-2">
+        <div class="pillar-ico ico-mint">&#8734;</div>
         <div>
-          <strong>Check Failed</strong>
-          <div id="failDetail" style="font-weight:300;margin-top:0.2rem;font-size:0.8rem;opacity:0.85;"></div>
+          <div class="pillar-title">Free Forever</div>
+          <div class="pillar-desc">No subscription. No premium tier. No monetisation of your words. Ever.</div>
         </div>
       </div>
-
-      <div class="result-detail" id="checkDetail"></div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
-      <button class="btn-primary" id="toPreviewBtn" onclick="goToStep(4)" disabled>Preview Submission →</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: PREVIEW & SUBMIT -->
-  <div class="form-panel" id="panel-4">
-    <h2 class="panel-title">Preview & Publish</h2>
-    <p class="panel-sub">This is how your work will appear on the platform. Review it carefully before submitting.</p>
-
-    <div class="preview-card" id="previewCard">
-      <div class="preview-cover" id="previewCover">
-        <span>No cover image</span>
-      </div>
-      <div class="preview-body">
-        <p class="preview-tag" id="previewTag">—</p>
-        <h3 class="preview-title" id="previewTitle">—</h3>
-        <p class="preview-author" id="previewAuthor">—</p>
-        <p class="preview-excerpt" id="previewExcerpt">Loading preview…</p>
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(201,169,110,0.15);">
-          <span class="board-verified">
-            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Verified Original
-          </span>
-          <span style="font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;">· PDF attached</span>
+      <div class="pillar reveal stagger-3">
+        <div class="pillar-ico ico-butter">&#169;</div>
+        <div>
+          <div class="pillar-title">Your Copyright</div>
+          <div class="pillar-desc">You retain full copyright. Full attribution always shown. Withdraw any time.</div>
         </div>
       </div>
     </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
-      <button class="btn-primary" onclick="submitWork()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;margin-right:0.3rem;"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-        Publish to Platform
-      </button>
-    </div>
   </div>
-
-  <!-- SUCCESS -->
-  <div class="success-state" id="successState">
-    <div class="success-icon">
-      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <h2 class="success-title">Your work is live.</h2>
-    <p class="success-sub">Thank you for contributing. Your piece has been published and will now appear on the platform for readers to discover.</p>
-    <div style="display:flex;gap:1rem;justify-content:center;">
-      <a href="portfolio.html" class="btn-secondary" style="text-decoration:none;display:inline-block;padding:0.85rem 2rem;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;">← Back to Portfolio</a>
-      <button class="btn-primary" onclick="resetForm()">Submit Another</button>
-    </div>
-  </div>
-
-  <!-- PUBLISHED BOARD -->
-  <div class="board-section" id="boardSection">
-    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--warm);margin-bottom:0.5rem;">Community</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;">Published Works</h2>
-    <div id="boardGrid" class="board-grid"></div>
-  </div>
-
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+<!-- CURATOR -->
+<section class="curator-section" id="about">
+  <div class="curator-grid">
+    <div class="curator-img-wrap reveal">
+      <img id="curatorPhoto"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='533' viewBox='0 0 400 533'%3E%3Crect width='400' height='533' fill='%23EBF4F6'/%3E%3Ccircle cx='200' cy='185' r='82' fill='%23A5C89E' opacity='.5'/%3E%3Cellipse cx='200' cy='430' rx='130' ry='95' fill='%237AB2B2' opacity='.3'/%3E%3Ctext x='200' y='200' text-anchor='middle' font-size='80' opacity='.25'%3E&#129489;%3C/text%3E%3C/svg%3E"
+        class="curator-photo" alt="Premanjan Pradhan">
+      <div class="curator-badge">
+        <div class="cb-num">42+</div>
+        <div class="cb-lbl">Works Published</div>
+      </div>
+    </div>
+    <div>
+      <p class="section-eyebrow">The Curator</p>
+      <div class="curator-name">Premanjan<br>Pradhan</div>
+      <div class="curator-role">
+        <span class="role-chip">Educator</span>
+        <span class="role-chip">Editor</span>
+        <span class="role-chip">Poet</span>
+        <span class="role-chip">Publisher</span>
+        <span class="role-chip">Odia &bull; English &bull; Hindi</span>
+      </div>
+      <p class="curator-bio">Born in Jharsuguda, Odisha. Writer, teacher, and editor whose work draws from the soil of everyday Indian life &mdash; its contradictions, its dignities, its quietly extraordinary people. He writes to bear witness. This platform is his invitation to others to do the same.</p>
+      <div class="curator-quote">
+        <p>&ldquo;I became an Indian, not just a Brahmin &mdash; on the day I realised that names are earned, not inherited.&rdquo;</p>
+      </div>
+      <a href="#" class="btn-hero">View Full Profile &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="cats-section">
+  <div style="padding:5rem 0 0">
+    <p class="section-eyebrow">Browse by Theme</p>
+    <h2 class="section-h2">Find Your <em>Kind</em></h2>
+  </div>
+  <div style="height:2rem"></div>
+  <div class="cats-grid">
+    <a href="#" class="cat-card cat-lime reveal"><div class="cat-icon">&#127807;</div><div class="cat-name">Nature</div><div class="cat-count">8 works</div></a>
+    <a href="#" class="cat-card cat-pink reveal stagger-1"><div class="cat-icon">&#128148;</div><div class="cat-name">Love & Loss</div><div class="cat-count">12 works</div></a>
+    <a href="#" class="cat-card cat-teal reveal stagger-2"><div class="cat-icon">&#127758;</div><div class="cat-name">Identity</div><div class="cat-count">7 works</div></a>
+    <a href="#" class="cat-card cat-lime reveal stagger-3"><div class="cat-icon">&#128591;</div><div class="cat-name">Spiritual</div><div class="cat-count">5 works</div></a>
+    <a href="#" class="cat-card cat-pink reveal stagger-1"><div class="cat-icon">&#9994;</div><div class="cat-name">Resistance</div><div class="cat-count">6 works</div></a>
+    <a href="#" class="cat-card cat-teal reveal stagger-2"><div class="cat-icon">&#127968;</div><div class="cat-name">Memory</div><div class="cat-count">9 works</div></a>
+  </div>
+  <div style="height:5rem"></div>
+</div>
+
+<!-- HOW TO SUBMIT -->
+<section class="section" id="guidelines">
+  <p class="section-eyebrow">How It Works</p>
+  <h2 class="section-h2">Four Steps to <em>Published</em></h2>
+  <p class="section-sub">Submit in three minutes. Your words find a permanent home.</p>
+
+  <div class="steps-grid">
+    <div class="step-card reveal" data-step="1">
+      <div class="step-dot" style="background:linear-gradient(135deg,var(--pink),var(--butter))">&#128221;</div>
+      <h3 class="step-title">Your Details</h3>
+      <p class="step-desc">Name, email, work type &mdash; poem, essay, memoir &mdash; title, short bio, and social handle.</p>
+    </div>
+    <div class="step-card reveal stagger-1" data-step="2">
+      <div class="step-dot" style="background:linear-gradient(135deg,var(--lime),var(--mint))">&#128196;</div>
+      <h3 class="step-title">Upload PDF</h3>
+      <p class="step-desc">Export as PDF (max 10MB) and drag it in. Add a cover image that captures your piece.</p>
+    </div>
+    <div class="step-card reveal stagger-2" data-step="3">
+      <div class="step-dot" style="background:linear-gradient(135deg,var(--teal),var(--ocean))">&#129302;</div>
+      <h3 class="step-title">AI Check</h3>
+      <p class="step-desc">Our AI verifies originality in 10&ndash;20 seconds. Passing work earns a <strong style="color:var(--sage)">Verified Original</strong> badge.</p>
+    </div>
+    <div class="step-card reveal stagger-3" data-step="4">
+      <div class="step-dot" style="background:linear-gradient(135deg,var(--mint),var(--olive))">&#127775;</div>
+      <h3 class="step-title">Publish Live</h3>
+      <p class="step-desc">Preview your work card, then click Publish. It goes live instantly, permanently.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--grad-card);border:1.5px solid rgba(255,255,255,0.85);border-radius:var(--radius);padding:2.25rem 2.5rem;backdrop-filter:blur(16px);box-shadow:var(--shadow)">
+    <p class="section-eyebrow" style="margin-bottom:1.25rem">Submission Guidelines</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem 3rem">
+      <div><p style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ocean);margin-bottom:.3rem;font-weight:700">Format</p><p style="font-size:.85rem;color:var(--muted)">PDF only &bull; Max 10MB</p></div>
+      <div><p style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ocean);margin-bottom:.3rem;font-weight:700">Language</p><p style="font-size:.85rem;color:var(--muted)">Any &mdash; Odia, English, Hindi all welcome</p></div>
+      <div><p style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ocean);margin-bottom:.3rem;font-weight:700">Rights</p><p style="font-size:.85rem;color:var(--muted)">You retain full copyright</p></div>
+      <div><p style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ocean);margin-bottom:.3rem;font-weight:700">Cost</p><p style="font-size:.85rem;color:var(--muted)">Free to submit and publish &bull; always</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testi-section">
+  <p class="section-eyebrow">What People Say</p>
+  <h2 class="section-h2">Voices of the <em>Community</em></h2>
+  <div style="height:2.5rem"></div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars"><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span></div>
+      <p class="testi-text">Submitting here was the first time I felt my poem would be taken seriously. The authenticity check gave me confidence &mdash; my work was genuinely valued.</p>
+      <div class="testi-author">
+        <div class="testi-avatar av-pink">A</div>
+        <div><div class="testi-name">Anwesha Tripathy</div><div class="testi-role">Poet &bull; @anweshatrips</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal stagger-1">
+      <div class="testi-stars"><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span></div>
+      <p class="testi-text">As an educator, I appreciate what Premanjan has built &mdash; a platform that treats language as sacred. The design, the care, the curation shows in every page.</p>
+      <div class="testi-author">
+        <div class="testi-avatar av-teal">K</div>
+        <div><div class="testi-name">Dr. Kamadeba Sahu</div><div class="testi-role">Head of Department</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal stagger-2">
+      <div class="testi-stars"><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span><span>&#11088;</span></div>
+      <p class="testi-text">I had never published anything before. This was where my first poem found a reader. That completely changed how I see myself as a writer.</p>
+      <div class="testi-author">
+        <div class="testi-avatar av-lime">S</div>
+        <div><div class="testi-name">Anshuman</div><div class="testi-role">First-time contributor</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="submit">
+  <div class="cta-pill">&#128396; Open Submissions Now</div>
+  <h2 class="cta-h2">Your poem<br>deserves to be<br><em>read.</em></h2>
+  <p class="cta-sub">Submit your original work in three minutes. Verified, attributed, and preserved forever on Words & Visions.</p>
+  <div class="cta-btns">
+    <a href="portfolio.html#submit" class="btn-cta-primary">&#128396; Submit Your Work</a>
+    <a href="#guidelines" class="btn-cta-ghost">Read the Guidelines</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-logo">Words & Visions</span>
+      <p class="footer-desc">An open poetry and writing platform for original, verified voices. Curated by educator and poet Premanjan Pradhan from Odisha, India. Free forever.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/premanjan_pradhan" target="_blank" class="soc">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="soc">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </a>
+        <a href="mailto:" class="soc">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <a href="#">Home</a><a href="#">Poems</a><a href="#">Prose & Essays</a><a href="#">Poets</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contribute</h4>
+      <a href="portfolio.html#submit">Submit Work</a><a href="#guidelines">Guidelines</a><a href="#">AI Check FAQ</a><a href="#">Copyright Info</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#about">The Platform</a><a href="#about">Premanjan Pradhan</a><a href="#">Contact</a><a href="https://instagram.com/premanjan_pradhan">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Words & Visions &bull; Premanjan Pradhan &bull; All rights reserved</span>
+    <span>Where every voice finds its reader.</span>
+  </div>
+</footer>
 
 <script>
-// ─── PDF.js setup ─────────────────────────────────────────────
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-// ─── State ────────────────────────────────────────────────────
-let currentStep = 1;
-let pdfFile = null;
-let imgFile = null;
-let imgDataURL = null;
-let pdfDoc = null;
-let currentPage = 1;
-let pdfText = '';
-let checkPassed = false;
-const STORAGE_KEY = 'premanjan_submissions';
-
-// ─── STEPS ────────────────────────────────────────────────────
-function goToStep(n) {
-  if (n === 2 && !validateStep1()) return;
-  if (n === 3 && !validateStep2()) return;
-
-  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(`panel-${n}`).classList.add('active');
-
-  for (let i = 1; i <= 4; i++) {
-    const s = document.getElementById(`step-${i}`);
-    s.classList.remove('active', 'completed');
-    if (i < n) s.classList.add('completed');
-    else if (i === n) s.classList.add('active');
-  }
-
-  if (n === 4) buildPreview();
-  currentStep = n;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ─── VALIDATION ───────────────────────────────────────────────
-function validateStep1() {
-  const name = document.getElementById('authorName').value.trim();
-  const email = document.getElementById('authorEmail').value.trim();
-  const type = document.getElementById('workType').value;
-  const title = document.getElementById('workTitle').value.trim();
-
-  if (!name) { showToast('Please enter your full name', 'error'); return false; }
-  if (!email || !email.includes('@')) { showToast('Please enter a valid email address', 'error'); return false; }
-  if (!type) { showToast('Please select your work type', 'error'); return false; }
-  if (!title) { showToast('Please enter the title of your work', 'error'); return false; }
-  return true;
-}
-
-function validateStep2() {
-  if (!pdfFile) { showToast('Please upload your writing as a PDF', 'error'); return false; }
-  if (!imgFile) { showToast('Please add a cover image for your work', 'error'); return false; }
-  return true;
-}
-
-// ─── PDF UPLOAD ───────────────────────────────────────────────
-async function handlePDFUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  if (file.size > 10 * 1024 * 1024) { showToast('PDF must be under 10MB', 'error'); return; }
-
-  pdfFile = file;
-  document.getElementById('pdfFileName').textContent = file.name;
-  document.getElementById('pdfFileSize').textContent = formatSize(file.size);
-  document.getElementById('pdfPreview').classList.add('show');
-
-  // Load PDF preview
-  const arrayBuffer = await file.arrayBuffer();
-  try {
-    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    currentPage = 1;
-    updatePageInfo();
-    await renderPDFPage(currentPage);
-    document.getElementById('pdfPreviewBox').classList.add('show');
-
-    // Extract text
-    pdfText = '';
-    for (let i = 1; i <= Math.min(pdfDoc.numPages, 5); i++) {
-      const page = await pdfDoc.getPage(i);
-      const tc = await page.getTextContent();
-      pdfText += tc.items.map(s => s.str).join(' ') + '\n';
-    }
-    showToast('PDF loaded successfully', 'success');
-  } catch(e) {
-    showToast('Could not render PDF preview', 'error');
-  }
-}
-
-async function renderPDFPage(num) {
-  if (!pdfDoc) return;
-  const page = await pdfDoc.getPage(num);
-  const canvas = document.getElementById('pdfCanvas');
-  const ctx = canvas.getContext('2d');
-  const viewport = page.getViewport({ scale: 1.2 });
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
-  await page.render({ canvasContext: ctx, viewport }).promise;
-}
-
-function updatePageInfo() {
-  if (!pdfDoc) return;
-  document.getElementById('pdfPageInfo').textContent = `Page ${currentPage} of ${pdfDoc.numPages}`;
-  document.getElementById('pdfPrev').disabled = currentPage <= 1;
-  document.getElementById('pdfNext').disabled = currentPage >= pdfDoc.numPages;
-}
-
-async function changePDFPage(dir) {
-  currentPage = Math.max(1, Math.min(pdfDoc.numPages, currentPage + dir));
-  updatePageInfo();
-  await renderPDFPage(currentPage);
-}
-
-function removePDF() {
-  pdfFile = null; pdfDoc = null; pdfText = '';
-  document.getElementById('pdfPreview').classList.remove('show');
-  document.getElementById('pdfPreviewBox').classList.remove('show');
-  document.getElementById('pdfInput').value = '';
-}
-
-// ─── IMAGE UPLOAD ─────────────────────────────────────────────
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { showToast('Image must be under 5MB', 'error'); return; }
-
-  imgFile = file;
-  const reader = new FileReader();
-  reader.onload = e => {
-    imgDataURL = e.target.result;
-    document.getElementById('imgPreview').src = imgDataURL;
-    document.getElementById('imgPreviewWrap').classList.add('show');
-  };
-  reader.readAsDataURL(file);
-}
-
-function removeImage() {
-  imgFile = null; imgDataURL = null;
-  document.getElementById('imgPreviewWrap').classList.remove('show');
-  document.getElementById('imgInput').value = '';
-}
-
-// ─── DRAG & DROP ──────────────────────────────────────────────
-['pdfZone', 'imgZone'].forEach(zoneId => {
-  const zone = document.getElementById(zoneId);
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-  zone.addEventListener('drop', e => {
-    e.preventDefault();
-    zone.classList.remove('drag-over');
-    const files = e.dataTransfer.files;
-    if (zoneId === 'pdfZone' && files[0]?.type === 'application/pdf') {
-      handlePDFUpload({ target: { files } });
-    } else if (zoneId === 'imgZone' && files[0]?.type.startsWith('image/')) {
-      handleImageUpload({ target: { files } });
-    } else {
-      showToast('Wrong file type dropped', 'error');
-    }
+// ── SCROLL REVEAL ────────────────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('up'); revealObs.unobserve(e.target); }
   });
-});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ─── AUTHENTICITY CHECK ───────────────────────────────────────
-async function runAuthenticityCheck() {
-  if (!pdfText.trim()) {
-    showToast('No PDF text to analyse. Please upload your PDF first.', 'error');
-    return;
+// ── THEME TOGGLE ─────────────────────────────────────────────
+function toggleTheme() {
+  const dark = document.body.getAttribute('data-theme') === 'dark';
+  if (dark) {
+    document.body.removeAttribute('data-theme');
+    document.getElementById('themeBtn').textContent = '● Dark';
+    localStorage.setItem('wv_theme', 'light');
+  } else {
+    document.body.setAttribute('data-theme', 'dark');
+    document.getElementById('themeBtn').textContent = '● Light';
+    localStorage.setItem('wv_theme', 'dark');
   }
+}
+// (dark theme CSS vars can be added here if needed)
 
-  const btn = document.getElementById('checkBtn');
-  btn.disabled = true;
-  document.getElementById('checkingBadge').classList.add('show');
-  document.getElementById('passBadge').classList.remove('show');
-  document.getElementById('failBadge').classList.remove('show');
-  document.getElementById('checkDetail').classList.remove('show');
-
-  const title = document.getElementById('workTitle').value;
-  const author = document.getElementById('authorName').value;
-  const workType = document.getElementById('workType').value;
-  const textSample = pdfText.substring(0, 3000);
-
-  const prompt = `You are an authenticity reviewer for a literary platform. Analyse the following writing sample for:
-1. Signs of AI generation (overly structured, no personality, generic phrasing)
-2. Plagiarism indicators (content that reads as copied)
-3. Overall originality and human voice
-
-Work details:
-- Title: "${title}"
-- Author: "${author}"
-- Type: ${workType}
-
-Writing sample (first 3000 chars):
----
-${textSample}
----
-
-Respond ONLY with a JSON object in this exact format, no preamble:
-{
-  "verdict": "pass" or "fail",
-  "confidence": "high" or "medium" or "low",
-  "summary": "One sentence verdict (under 20 words)",
-  "detail": "2-3 sentences explaining your reasoning, noting any specific observations about voice, style, and originality"
-}`;
-
+// ── UNSPLASH COVER IMAGES ─────────────────────────────────────
+const KEY = 'fZ90P7mDwD44zfSyDHH0ysdyRDNmsctEN-rBEboq4A';
+async function loadCover(id, query) {
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    const data = await res.json();
-    const raw = data.content?.[0]?.text || '';
-    let parsed;
-
-    try {
-      const clean = raw.replace(/```json|```/g, '').trim();
-      parsed = JSON.parse(clean);
-    } catch {
-      parsed = { verdict: 'pass', confidence: 'medium', summary: 'Work appears to be original human writing.', detail: 'The writing shows personal voice and authentic human expression.' };
-    }
-
-    document.getElementById('checkingBadge').classList.remove('show');
-
-    if (parsed.verdict === 'pass') {
-      document.getElementById('passBadge').classList.add('show');
-      document.getElementById('passDetail').textContent = parsed.summary;
-      document.getElementById('checkDetail').textContent = parsed.detail;
-      document.getElementById('checkDetail').classList.add('show');
-      document.getElementById('toPreviewBtn').disabled = false;
-      checkPassed = true;
-      showToast('Your work passed the authenticity check!', 'success');
-    } else {
-      document.getElementById('failBadge').classList.add('show');
-      document.getElementById('failDetail').textContent = parsed.summary;
-      document.getElementById('checkDetail').textContent = parsed.detail;
-      document.getElementById('checkDetail').classList.add('show');
-      checkPassed = false;
-      showToast('Authenticity check flagged an issue. Please review.', 'error');
-    }
-  } catch(err) {
-    document.getElementById('checkingBadge').classList.remove('show');
-    // Graceful fallback — allow submission, mark as pending manual review
-    document.getElementById('passBadge').classList.add('show');
-    document.getElementById('passDetail').textContent = 'Pending manual review (offline check).';
-    document.getElementById('checkDetail').textContent = 'The automated check could not be completed. Your submission will be reviewed manually before publishing.';
-    document.getElementById('checkDetail').classList.add('show');
-    document.getElementById('toPreviewBtn').disabled = false;
-    checkPassed = true;
-  }
-
-  btn.disabled = false;
-}
-
-// ─── PREVIEW ──────────────────────────────────────────────────
-function buildPreview() {
-  document.getElementById('previewTag').textContent = document.getElementById('workType').value;
-  document.getElementById('previewTitle').textContent = document.getElementById('workTitle').value;
-  const author = document.getElementById('authorName').value;
-  const social = document.getElementById('authorSocial').value;
-  document.getElementById('previewAuthor').textContent = social ? `${author} · ${social}` : author;
-
-  const cover = document.getElementById('previewCover');
-  if (imgDataURL) {
-    cover.innerHTML = `<img src="${imgDataURL}" alt="Cover">`;
-  }
-
-  const excerpt = pdfText ? pdfText.substring(0, 280).trim() + '…' : 'No preview available.';
-  document.getElementById('previewExcerpt').textContent = excerpt;
-}
-
-// ─── SUBMIT ───────────────────────────────────────────────────
-function submitWork() {
-  const submission = {
-    id: Date.now(),
-    title: document.getElementById('workTitle').value,
-    author: document.getElementById('authorName').value,
-    social: document.getElementById('authorSocial').value,
-    type: document.getElementById('workType').value,
-    bio: document.getElementById('authorBio').value,
-    excerpt: pdfText ? pdfText.substring(0, 280).trim() + '…' : '',
-    cover: imgDataURL,
-    verified: checkPassed,
-    date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-  };
-
-  // Save to localStorage
-  const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  existing.unshift(submission);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-
-  // Show success
-  document.getElementById('stepsBar').style.display = 'none';
-  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('successState').classList.add('show');
-  renderBoard();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ─── BOARD ────────────────────────────────────────────────────
-function renderBoard() {
-  const grid = document.getElementById('boardGrid');
-  const items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-
-  if (!items.length) {
-    grid.innerHTML = `<div class="empty-board" style="grid-column:1/-1">
-      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      <p>No submissions yet — be the first to share your voice.</p>
-    </div>`;
-    return;
-  }
-
-  grid.innerHTML = items.map(s => `
-    <div class="board-card">
-      ${s.cover
-        ? `<img class="board-card-img" src="${s.cover}" alt="${s.title}">`
-        : `<div class="board-card-img" style="display:flex;align-items:center;justify-content:center;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);">No Cover</div>`
+    const r = await fetch(
+      `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&orientation=landscape&content_filter=high`,
+      { headers: { Authorization: `Client-ID ${KEY}` } }
+    );
+    const d = await r.json();
+    if (d.urls?.regular) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.backgroundImage = `url('${d.urls.regular}')`;
+        el.style.backgroundSize = 'cover';
+        el.style.backgroundPosition = 'center';
       }
-      <div class="board-card-body">
-        <p class="board-card-tag">${s.type}</p>
-        <h3 class="board-card-title">${s.title}</h3>
-        <p class="board-card-author">${s.author}${s.social ? ' · ' + s.social : ''}</p>
-        ${s.verified ? `<div class="board-verified"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Verified Original</div>` : ''}
-      </div>
-    </div>
-  `).join('');
+    }
+  } catch(e) {}
 }
 
-// ─── HELPERS ──────────────────────────────────────────────────
-function formatSize(bytes) {
-  if (bytes < 1024) return bytes + ' B';
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-}
-
-function showToast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.className = `toast ${type}`;
-  t.innerHTML = type === 'success'
-    ? `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> ${msg}`
-    : `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> ${msg}`;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-function resetForm() {
-  document.getElementById('stepsBar').style.display = 'flex';
-  document.getElementById('successState').classList.remove('show');
-  pdfFile = imgFile = imgDataURL = pdfDoc = null;
-  pdfText = ''; checkPassed = false; currentPage = 1;
-  ['authorName','authorEmail','workTitle','authorBio','authorSocial'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('workType').value = '';
-  document.getElementById('pdfPreview').classList.remove('show');
-  document.getElementById('pdfPreviewBox').classList.remove('show');
-  document.getElementById('imgPreviewWrap').classList.remove('show');
-  document.getElementById('checkingBadge').classList.remove('show');
-  document.getElementById('passBadge').classList.remove('show');
-  document.getElementById('failBadge').classList.remove('show');
-  document.getElementById('checkDetail').classList.remove('show');
-  document.getElementById('toPreviewBtn').disabled = true;
-  goToStep(1);
-}
-
-// Dark mode persistence
-(function() {
-  if (localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+// Load hero potter bg
+(async () => {
+  try {
+    const r = await fetch(
+      `https://api.unsplash.com/photos/random?query=potter+clay+wheel+craft+hands&orientation=landscape&content_filter=high`,
+      { headers: { Authorization: `Client-ID ${KEY}` } }
+    );
+    const d = await r.json();
+    // Use as subtle ambient bg
+  } catch(e) {}
 })();
 
-// Load board on start
-renderBoard();
+loadCover('cover0', 'saffron spice flower purple crocus harvest');
+loadCover('cover1', 'dark moody night storm dramatic');
+loadCover('cover2', 'hourglass time clock vintage sepia');
+
+// ── SMOOTH SCROLL DUPLICATE (for infinite) ───────────────────
+const track = document.getElementById('scrollTrack');
+if (track) {
+  track.innerHTML = track.innerHTML + track.innerHTML;
+}
 </script>
 </body>
 </html>
